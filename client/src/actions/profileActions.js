@@ -2,10 +2,10 @@ import axios from "axios";
 import {
   GET_PROFILE,
   PROFILE_LOADING,
-  PROFILE_NOT_FOUND,
   GET_ERRORS,
   CLEAR_CURRENT_PROFILE,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  GET_PROFILES
 } from "./types";
 
 // Get current profile
@@ -38,6 +38,25 @@ export const createProfile = (profileData, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+// Get all profiles
+export const getProfiles = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/profile/all")
+    .then(res =>
+      dispatch({
+        type: GET_PROFILES,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch({
+        type: GET_PROFILES,
+        payload: {}
+      });
+    });
 };
 
 // Add experience
