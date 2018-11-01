@@ -97,7 +97,6 @@ class EditProfile extends Component {
   }
 
   onSubmit(e) {
-    console.log("submit");
     e.preventDefault();
 
     const profileData = {
@@ -115,7 +114,7 @@ class EditProfile extends Component {
       youtube: this.state.youtube,
       instagram: this.state.instagram
     };
-
+    console.log(profileData);
     this.props.createProfile(profileData, this.props.history);
   }
 

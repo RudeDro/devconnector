@@ -1,5 +1,6 @@
 const Validator = require("validator");
 const isEmpty = require("./is-empty");
+const prependHttps = require("./prepend-https");
 
 module.exports = function validateProfileInput(data) {
   let errors = {};
@@ -24,19 +25,28 @@ module.exports = function validateProfileInput(data) {
 
   if (!isEmpty(data.website) && !Validator.isURL(data.website)) {
     errors.website = "Not a valid URL";
+  } else {
+    data.website = prependHttps(data.website);
   }
-
   if (!isEmpty(data.twitter) && !Validator.isURL(data.twitter)) {
     errors.twitter = "Not a valid URL";
+  } else if (!isEmpty(data.twitter)) {
+    data.twitter = prependHttps(data.twitter);
   }
   if (!isEmpty(data.youtube) && !Validator.isURL(data.youtube)) {
     errors.youtube = "Not a valid URL";
+  } else if (!isEmpty(data.youtube)) {
+    data.youtube = prependHttps(data.youtube);
   }
   if (!isEmpty(data.linkedin) && !Validator.isURL(data.linkedin)) {
     errors.linkedin = "Not a valid URL";
+  } else if (!isEmpty(data.linkedin)) {
+    data.linkedin = prependHttps(data.linkedin);
   }
   if (!isEmpty(data.instagram) && !Validator.isURL(data.instagram)) {
     errors.instagram = "Not a valid URL";
+  } else if (!isEmpty(data.instagram)) {
+    data.instagram = prependHttps(data.instagram);
   }
 
   return {
