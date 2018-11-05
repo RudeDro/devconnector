@@ -1,0 +1,48 @@
+import axios from "axios";
+import { ADD_POST, GET_POSTS, POST_LOADING, GET_ERRORS } from "./types";
+import setAuthToken from "../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
+
+// Get all posts
+export const addPost = postData => dispatch => {
+  axios
+    .post("/api/posts/", postData)
+    .then(res =>
+      dispatch({
+        type: ADD_POST,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Get all posts
+export const getPosts = () => dispatch => {
+  dispatch(setPostLoading());
+  axios
+    .get("/api/posts/")
+    .then(res =>
+      dispatch({
+        type: GET_POSTS,
+        payload: res.data
+      })
+    )
+    .catch(err => {
+      dispatch({
+        type: GET_POSTS,
+        payload: {}
+      });
+    });
+};
+
+// Posts loading
+export const setPostLoading = () => {
+  return {
+    type: POST_LOADING
+  };
+};
